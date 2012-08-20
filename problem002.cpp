@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
 		
 		const auto upper = 4000000; 
 		
+		//フィボナッチ数列
 		for ( const auto fib: yuh::fibonacci() )
 		{
 			//上限

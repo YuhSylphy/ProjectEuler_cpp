@@ -21,9 +21,10 @@ int main(int argc, char* argv[])
 		const auto below = 1000;
 		auto sum = 0;
 
+		//[0, below)
 		for( auto i: boost::irange(0, below) )
 		{
-			if(!( i % 3 && i % 5))
+			if(!( i % 3 && i % 5)) //条件に合致
 			{
 				sum += i;
 			}
