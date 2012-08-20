@@ -23,7 +23,8 @@ int main(int argc, char* argv[])
 	auto f = []() -> long long
 	{
 		const auto tgt = 600851475143;
-		
+
+		//素因数分解->max_elementで最大値のiteratorを取得->dereference
 		return *boost::max_element(yuh::prime_factor(tgt));
  	};
 
