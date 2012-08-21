@@ -14,7 +14,6 @@
 #include <yuh/math.hpp>
 
 using namespace euler;
-using boost::operator<<;
 
 int main(int argc, char* argv[])
 {
