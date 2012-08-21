@@ -7,13 +7,14 @@ DEPENDS=$(patsubst %.o,%.d,$(OBJS))
 TARGET=$(patsubst %.o,%,$(OBJS))
 
 MYLIB=/home/yuh/document/cpp/yuh
+OVEN_BOOST=/home/yuh/git/OvenToBoost
 
 CC = clang
 CFLAGS = -O2 -Wall
 CXX = clang++
-INCLUDES = -I$(MYLIB)/include
+INCLUDES = -I$(MYLIB)/include -I$(OVEN_BOOST)
 CXXFLAGS = -O3 -Wall -std=c++11 -pthread $(INCLUDES)
-LDFLAGS = -L$(MYLIB)/libs -lyuh -lm -lstdc++
+LDFLAGS = -L$(MYLIB)/libs  -lyuh -lm -lstdc++
 
 .PHONY: all clean check-syntax distclean tar depend
 .SUFFIXES:
