@@ -5,19 +5,9 @@
 
 #include "pe.h"
 
-#include <set>
-#include <iterator>
-#include <functional>
-
 #include <boost/range/algorithm.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
-
-#include <pstade/oven/io.hpp>
-
-#include <yuh/math.hpp>
-#include <yuh/prime.h>
-
 
 using namespace euler;
 
