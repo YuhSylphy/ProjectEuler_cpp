@@ -29,15 +29,16 @@ int main(int argc, char* argv[])
 	};
 	auto f = []() -> int
 	{
+		// 0 < a < b < c && a + b + c = 1000 を満たすように走査
 		for( const auto c: boost::irange(334, 999))
 		{
 			for( const auto b: boost::irange((1000 - c) / 2 + 1, std::min(c, 1000 - c)))
 			{
 				const auto a = 1000 - b - c;
+				// ピタゴラス数を見つけたら積を返す
+				// 「exactly one」なので見つけた時点で返せば良い
 				if ( yuh::is_Pythagorean(a, b, c) ) 
 					return a * b * c;
-				// if(a >= b || b >= c || a <= 0 || b <= 0 || c <= 0 || a + b + c != 1000 )
-				// 	std::cout << a << ", " << b << ", " << c << std::endl;
 			}
 
 		}
