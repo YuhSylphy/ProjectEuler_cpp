@@ -51,10 +51,10 @@ int main(int argc, char* argv[])
 	{
 		static const auto tgt = 500;
 		int ret;
-		for ( auto tri: yuh::polygonal<3>() )
+		for ( auto tri: yuh::polygonal<3>() ) //多角数 p=3
 		{
 			struct prod
-			{
+			{	//lambdaでもテンプレート使いたいなあ
 				template<typename R>
 				auto operator()(const R& r) const -> typename boost::range_value<R>::type 
 					{
