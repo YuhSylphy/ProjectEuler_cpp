@@ -1,7 +1,7 @@
 #!/bin/make
 
-SRC=$(shell ls problem*.cpp)
-HED=$(shell ls *.h *.hpp)
+SRC=$(shell ls problem*.cpp | grep -v flymake)
+HED=$(shell ls *.h *.hpp | grep -v flymake)
 OBJS=$(patsubst %.cpp,%.o,$(SRC))
 DEPENDS=$(patsubst %.o,%.d,$(OBJS))
 TARGET=$(patsubst %.o,%,$(OBJS))

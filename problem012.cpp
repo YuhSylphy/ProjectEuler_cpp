@@ -18,6 +18,7 @@
 #include <yuh/prime.h>
 #include <yuh/adaptor/prettied.hpp>
 #include <yuh/adaptor/set_powered.hpp>
+#include <yuh/adaptor/count_mapped.hpp>
 
 using namespace euler;
 
@@ -49,37 +50,21 @@ int main(int argc, char* argv[])
 	};
 	auto f = []() -> int
 	{
-		static const auto tgt = 500;
-		int ret;
-		for ( auto tri: yuh::polygonal<3>() ) //多角数 p=3
+		static const auto tgt = 500; // 閾値
+		for( auto tri: yuh::polygonal<3>() ) //多角数 p=3
 		{
-			struct prod
-			{	//lambdaでもテンプレート使いたいなあ
-				template<typename R>
-				auto operator()(const R& r) const -> typename boost::range_value<R>::type 
-					{
-						typedef typename boost::range_value<R>::type value_type;
-						return boost::accumulate(r, value_type(1), std::multiplies<value_type>());
-					}
-			}; // accumulateで掛けて返す
-
-			std::set<long long> s =  
-				yuh::prime_factor(tri) //素因数分解して
-				| set_powered          //冪集合にして
-				| transformed(prod())  //それぞれ積を取ると約数リスト(重複あり，順序どおりでない
-				| boost::as_container; //代入可能な形にしてsetに入れる=重複削除&順序どおり
-			
-			if ( s.size() > tgt ) //約数の個数 
-			{
-				//std::cout << boost::format("%|3|: %||") % tri % (s|prettied) << std::endl;
-				ret = tri;
-				break;
-			}
-		
+			if ( tgt < 
+				 boost::accumulate( //約数の個数
+					 yuh::prime_factor(tri) | count_mapped, // 素因数分解->値,個数ペア変換
+					 1, //初期値
+					 [](int p, std::pair<long long, int> x) {
+						 return p * (std::get<1>(x) + 1); //個数+1を掛けていく
+					 }) ) 
+				return tri; //条件満たした三角数を発見
 		}
-
-		return ret;
+		return 0;
 	};
+	
 	solve(f, state);
 	
 	return 0;
