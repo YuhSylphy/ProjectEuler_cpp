@@ -49,6 +49,13 @@ int main(int argc, char* argv[])
 		[&collatz]( uint32_t n ) -> uint32_t
 		{
 			static std::unordered_map<uint32_t, uint32_t> buf{ {1U, 1U} };
+			struct initializer{
+				template<typename Map>
+				initializer(Map& buf)
+				{
+					buf.rehash(4000037);
+				}
+			} static initr(buf);
 			
 			// 0にはならないので存在チェックになるはず
 			// 一度呼び出したKeyは必ず埋まるので無駄にもならない
