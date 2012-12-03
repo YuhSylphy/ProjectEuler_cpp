@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 		"",
 		"What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?",
 	};
-	auto f = []() -> int
+	auto f = []() -> long long
 	{
 		typedef std::multiset<long long> set_type;
 		static const auto tgt = 20;
