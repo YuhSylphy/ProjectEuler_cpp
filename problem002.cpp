@@ -1,3 +1,5 @@
+#define BOOST_RESULT_OF_USE_DECLTYPE
+
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
@@ -5,9 +7,13 @@
 
 #include "pe.h"
 
-#include <boost/range/irange.hpp>
-
-#include <yuh/fibonacci.hpp>
+#include <boost/range/numeric.hpp>
+#include <boost/range/iteration.hpp>
+#include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/regular_extension/filtered.hpp>
+#include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/adaptor/regular_extension/transformed.hpp>
+#include <boost/range/adaptor/taken_while.hpp>
 
 using namespace euler;
 
@@ -26,23 +32,19 @@ int main(int argc, char* argv[])
 	};
 	auto f = []() -> int
 	{
-		int ret = 0;
-		
-		const auto upper = 4000000; 
-		
-		//フィボナッチ数列
-		for ( const auto fib: yuh::fibonacci() )
-		{
-			//上限
-			if(fib > upper) break;
+		using namespace boost::adaptors;
+		const auto upper = 4 * 1000 * 1000;
 
-			if(fib % 2 == 0)
-			{ //偶数
-				ret += fib;
-			}
-		}
-
-		return ret;
+		return boost::accumulate(
+			boost::iteration(
+				std::make_pair(1, 1),
+				boost::regular([](std::pair<int, int> x){
+						return std::make_pair(x.second, x.first + x.second);
+					})) 
+			|+ transformed([](std::pair<int, int> x){ return x.second; })
+			|+ filtered([](int x){ return x % 2 == 0; })
+			|  taken_while([upper](int x){ return x < upper; })
+			, 0);
 	};
 
 	solve(f, state);
