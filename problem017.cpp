@@ -83,7 +83,6 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				// std::cout << ", " << letters(n - (n % 10)) << ", " << letters(n % 10) << std::endl;
 				return letters(n - (n % 10)) + letters(n % 10);
 			}
 			throw;
